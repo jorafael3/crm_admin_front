@@ -1,0 +1,36 @@
+<div class="container-fluid usuarios-wrapper">
+    <div class="row">
+        <div class="col-12">
+            <!-- Información de sesión (solo para testing) -->
+            @if (sessionData) {
+                <div class="alert alert-info mb-3">
+                    <h6>📋 Datos de Sesión del Usuario Actual:</h6>
+                    <p><strong>Usuario:</strong> {{ sessionData.userData?.nombre || 'No disponible' }}</p>
+                    <p><strong>Email:</strong> {{ sessionData.userData?.email || 'No disponible' }}</p>
+                    <p><strong>Rol:</strong> {{ sessionData.userData?.id_rol || 'No disponible' }}</p>
+                    <p><strong>Token disponible:</strong> {{ sessionData.hasToken ? 'Sí' : 'No' }}</p>
+                    <p><strong>Autenticado:</strong> {{ sessionData.isAuthenticated ? 'Sí' : 'No' }}</p>
+                </div>
+            }
+
+            <app-card [cardBodyClass]="'px-0 pt-0'">
+                <div class="usuarios-management table-responsive custom-scrollbar">
+                    <div class="recent-table">
+                        <app-table 
+                        [hasCheckbox]="true" 
+                        [tableConfig]="tableConfig" 
+                        [pageSize]="10" 
+                        [paginateDetails]="true" 
+                        [selectedRows]="false" 
+                        [dateFilter]="true" 
+                        [downloadReports]="true"
+                        [exportButtons]="['excel', 'pdf', 'csv']"
+                        [customButtons]="customButtons"
+                        (action)="onTableAction($event)"
+                        (customAction)="onCustomAction($event)"></app-table>
+                    </div>
+                </div>
+            </app-card>
+        </div>
+    </div>
+</div>

@@ -1,5 +1,5 @@
 import { CommonModule, DecimalPipe } from '@angular/common';
-import { Component, EventEmitter, Input, Output, SimpleChanges, ChangeDetectorRef } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgbCalendar, NgbDate, NgbDateParserFormatter, NgbDatepickerModule, NgbModal, NgbPaginationModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
@@ -67,8 +67,8 @@ export class TableComponent {
   public selectedOpenRows: number[] = [];
   public dateDropdownOpen: boolean = false;
   public hoveredDate: NgbDate | null = null;
-  public fromDate: NgbDate | null;
-  public toDate: NgbDate | null;
+	public fromDate: NgbDate | null;
+	public toDate: NgbDate | null;
 
   public filter = {
     search: '',
@@ -93,7 +93,7 @@ export class TableComponent {
   public selectedValue: string = '';
 
   constructor(public tableService: TableService, private modal: NgbModal, private calendar: NgbCalendar,
-    public formatter: NgbDateParserFormatter, private cdr: ChangeDetectorRef) {    
+    public formatter: NgbDateParserFormatter) {    
   }
 
   // Métodos helper para determinar qué botones mostrar
@@ -144,7 +144,6 @@ export class TableComponent {
 
     if (changes['tableConfig'] && this.tableConfig && this.tableConfig.data) {
       this.paginateData();
-      this.cdr.detectChanges();
     }
 
     if (changes['pageNo']) {
@@ -350,10 +349,7 @@ export class TableComponent {
     this.selectedDate = `${this.filter['date']['start_date']} - ${this.filter['date']['to_date']}` 
     this.dateDropdownOpen = false;
     this.applyFilters();
-
-    // Imprimir el rango seleccionado en consola
-    console.log('Rango de fechas seleccionado:', this.selectedDate);
-
+    
     // Emitir el evento de cambio de filtro de fecha
     this.dateFilterChange.emit(this.selectedValue);
   }
@@ -380,29 +376,29 @@ export class TableComponent {
     this.applyFilters();
   }
 
-  isHovered(date: NgbDate) {
-    return (
-      this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) && date.before(this.hoveredDate)
-    );
-  }
+	isHovered(date: NgbDate) {
+		return (
+			this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) && date.before(this.hoveredDate)
+		);
+	}
 
-  isInside(date: NgbDate) {
-    return this.toDate && date.after(this.fromDate) && date.before(this.toDate);
-  }
+	isInside(date: NgbDate) {
+		return this.toDate && date.after(this.fromDate) && date.before(this.toDate);
+	}
 
-  isRange(date: NgbDate) {
-    return (
-      date.equals(this.fromDate) ||
-      (this.toDate && date.equals(this.toDate)) ||
-      this.isInside(date) ||
-      this.isHovered(date)
-    );
-  }
+	isRange(date: NgbDate) {
+		return (
+			date.equals(this.fromDate) ||
+			(this.toDate && date.equals(this.toDate)) ||
+			this.isInside(date) ||
+			this.isHovered(date)
+		);
+	}
 
-  validateInput(currentValue: NgbDate | null, input: string): NgbDate | null {
-    const parsed = this.formatter.parse(input);
-    return parsed && this.calendar.isValid(NgbDate.from(parsed)) ? NgbDate.from(parsed) : currentValue;
-  }
+	validateInput(currentValue: NgbDate | null, input: string): NgbDate | null {
+		const parsed = this.formatter.parse(input);
+		return parsed && this.calendar.isValid(NgbDate.from(parsed)) ? NgbDate.from(parsed) : currentValue;
+	}
 
   applyFilters() {
     let filteredData = [...this.tableConfig.data];

@@ -13,24 +13,20 @@
   <div>
     <div class="row align-items-center g-1">
       <div class="col-auto">
-        <label class="form-label">Select Dates</label>
+        <label class="form-label">Seleccione fechas</label>
       </div>
       <div class="col-auto">
         <div class="range-dropdown flatpickr-input" id="reportrange" readonly="readonly">
-          <span (click)="handleDropdown()">{{ selectedDate ? selectedDate : 'Select' }}</span>
+          <span (click)="handleDropdown()">{{ selectedDate ? selectedDate : 'Seleccionar' }}</span>
           <div id="rangeButtons" [class.range-option]="dateDropdownOpen">
-            <button (click)="handleDateFilter('today')" [class.active]="selectedValue == 'today'">Today</button>
+            <button (click)="handleDateFilter('today')" [class.active]="selectedValue == 'today'">Hoy</button>
             <button (click)="handleDateFilter('yesterday')"
-              [class.active]="selectedValue == 'yesterday'">Yesterday</button>
-            <button (click)="handleDateFilter('7_days')" [class.active]="selectedValue == '7_days'">Last 7 Days</button>
-            <button (click)="handleDateFilter('30_days')" [class.active]="selectedValue == '30_days'">Last 30
-              Days</button>
-            <button (click)="handleDateFilter('this_month')" [class.active]="selectedValue == 'this_month'">This
-              Month</button>
-            <button (click)="handleDateFilter('last_month')" [class.active]="selectedValue == 'last_month'">Last
-              Month</button>
-            <button (click)="handleDateFilter('custom')" [class.active]="selectedValue == 'custom'">Custom Date
-              Range</button>
+              [class.active]="selectedValue == 'yesterday'">Ayer</button>
+            <button (click)="handleDateFilter('7_days')" [class.active]="selectedValue == '7_days'">Últimos 7 días</button>
+            <button (click)="handleDateFilter('30_days')" [class.active]="selectedValue == '30_days'">Últimos 30 días</button>
+            <button (click)="handleDateFilter('this_month')" [class.active]="selectedValue == 'this_month'">Este mes</button>
+            <button (click)="handleDateFilter('last_month')" [class.active]="selectedValue == 'last_month'">Último mes</button>
+            <button (click)="handleDateFilter('custom')" [class.active]="selectedValue == 'custom'">Rango personalizado</button>
           </div>
 
         </div>
@@ -57,19 +53,56 @@
       <input type="text" name="searchTerm" [(ngModel)]="searchText" (keyup)="searchTerm(searchText)"
         [placeholder]="searchPlaceholder">
     </label>
-    @if(downloadReports) {
-      <div class="dt-buttons btn-group flex-wrap">
-        <button class="btn buttons-copy buttons-html5 btn-outline-primary" type="button"><span>Copy</span></button>
-        <button class="btn buttons-csv buttons-html5 btn-outline-primary" type="button"><span>CSV</span></button>
-        <button class="btn buttons-excel buttons-html5 btn-outline-primary" type="button"><span>Excel</span></button>
-        <button class="btn buttons-pdf buttons-html5 btn-outline-primary" type="button"><span>PDF</span></button>
-        <button class="btn buttons-print btn-outline-primary" type="button"><span>Print</span></button>
-      </div>
-    }
   </div>
   }
 </div>
 }
+
+<!-- Botones personalizados y de exportación (separados del search/filtros) -->
+@if(downloadReports || customButtons.length > 0) {
+<div class="p-3">
+  <div class="dt-buttons btn-group flex-wrap">
+    <!-- Botones personalizados -->
+    @for(customBtn of customButtons; track customBtn.action) {
+    <button 
+        [class]="customBtn.class || 'btn btn-outline-secondary'" 
+        type="button" 
+        [title]="customBtn.tooltip || customBtn.label"
+        (click)="handleCustomAction(customBtn.action)">
+        @if(customBtn.icon) {
+        <i [class]="customBtn.icon"></i>
+        }
+        <span>{{ customBtn.label }}</span>
+    </button>
+    }
+    
+    <!-- Separador si hay botones personalizados y de exportación -->
+    @if(customButtons.length > 0 && downloadReports) {
+    <div class="btn-separator mx-2"></div>
+    }
+    
+    <!-- Botones de exportación existentes -->
+    @if(downloadReports) {
+    @if(shouldShowButton('copy')) {
+    <button class="btn buttons-copy buttons-html5 btn-outline-primary" type="button" (click)="exportData('copy')"><span>Copy</span></button>
+    }
+    @if(shouldShowButton('csv')) {
+    <button class="btn buttons-csv buttons-html5 btn-outline-primary" type="button" (click)="exportData('csv')"><span>CSV</span></button>
+    }
+    @if(shouldShowButton('excel')) {
+    <button class="btn buttons-excel buttons-html5 btn-outline-primary" type="button" (click)="exportData('excel')"><span>Excel</span></button>
+    }
+    @if(shouldShowButton('pdf')) {
+    <button class="btn buttons-pdf buttons-html5 btn-outline-primary" type="button" (click)="exportData('pdf')"><span>PDF</span></button>
+    }
+    @if(shouldShowButton('print')) {
+    <button class="btn buttons-print btn-outline-primary" type="button" (click)="exportData('print')"><span>Print</span></button>
+    }
+    }
+  </div>
+</div>
+}
+
 <table class="table" [ngClass]="tableClass">
   <thead>
     <tr>
@@ -157,7 +190,7 @@
         <div class="product-action common-align gap-2 justify-content-start">
           @for(rows of tableConfig.row_action; track rows) {
           @if(rows.type == 'button'){
-          <button [class]="rows.class">{{ rows.label }}</button>
+          <button [class]="rows.class" (click)="handleAction(rows, details)">{{ rows.label }}</button>
           }
           @if(rows.label == 'Create') {
           <button class="plus-btn">+ </button>

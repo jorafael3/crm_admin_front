@@ -29,6 +29,7 @@ export class SidebarComponent {
   constructor(private router: Router, public layoutService: LayoutService) {
     this.items.subscribe(menuItems => {
       this.menuItems = menuItems;
+      console.log('menuItems: ', menuItems);
       this.router.events.subscribe((event) => {
         if (event instanceof NavigationEnd) {
           const urlTree = this.router.parseUrl(event.url);

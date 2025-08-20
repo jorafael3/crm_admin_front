@@ -8,10 +8,10 @@ import {
   Platform,
   coerceElement,
   getRtlScrollAxisType
-} from "./chunk-DSEIV745.js";
+} from "./chunk-Q74FW6BQ.js";
 import {
   DomSanitizer
-} from "./chunk-IOHCER5G.js";
+} from "./chunk-5UGCSGEM.js";
 import {
   AsyncPipe,
   CommonModule,
@@ -21,10 +21,10 @@ import {
   NgSwitchCase,
   NgSwitchDefault,
   NgTemplateOutlet
-} from "./chunk-RV5ILGUE.js";
+} from "./chunk-SEJUQZKU.js";
 import {
   DOCUMENT
-} from "./chunk-IVLPK6CY.js";
+} from "./chunk-ZV3PAJXX.js";
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -4104,4 +4104,4 @@ export {
   GalleryComponent,
   GalleryModule
 };
-//# sourceMappingURL=chunk-6V4SZKMP.js.map
+//# sourceMappingURL=chunk-WVYDQZOP.js.map

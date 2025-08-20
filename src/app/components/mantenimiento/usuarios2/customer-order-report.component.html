@@ -1,0 +1,32 @@
+<div class="container-fluid customer-order-wrapper">
+    <div class="row">
+        <div class="col-12">
+            <app-card [headerTitle]="'Usuarios'">
+                <div class="row mb-2">
+                    <div class="col-md-3 mb-2">
+                        <label for="fechaInicio" class="form-label mb-0">Fecha inicial:</label>
+                        <input id="fechaInicio" type="date" class="form-control form-control-sm"
+                            [(ngModel)]="fechaPersonalizadaInicio" name="fechaPersonalizadaInicio">
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <label for="fechaFin" class="form-label mb-0">Fecha final:</label>
+                        <input id="fechaFin" type="date" class="form-control form-control-sm"
+                            [(ngModel)]="fechaPersonalizadaFin" name="fechaPersonalizadaFin">
+                    </div>
+                </div>
+                <div class="customer-order-report table-responsive custom-scrollbar">
+
+                    <div class="recent-table">
+
+                        <app-table [hasCheckbox]="true" [tableConfig]="tableConfig" [pageSize]="10"
+                            [paginateDetails]="true" [selectedRows]="false" [downloadReports]="true"
+                            [exportButtons]="['excel', 'pdf']" [customButtons]="customButtons"
+                            [initialDateFilter]="'this_month'" (action)="onTableAction($event)"
+                            (customAction)="onCustomAction($event)">
+                        </app-table>
+                    </div>
+                </div>
+            </app-card>
+        </div>
+    </div>
+</div>

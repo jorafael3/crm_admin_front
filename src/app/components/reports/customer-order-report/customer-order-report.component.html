@@ -4,7 +4,20 @@
             <app-card [cardBodyClass]="'px-0 pt-0'">
                 <div class="customer-order-report table-responsive custom-scrollbar">
                     <div class="recent-table">
-                        <app-table [hasCheckbox]="true" [tableConfig]="tableConfig" [pageSize]="10" [paginateDetails]="true" [selectedRows]="true" [dateFilter]="true" [downloadReports]="true"></app-table>
+                        <app-table 
+                        [hasCheckbox]="true" 
+                        [tableConfig]="tableConfig" 
+                        [pageSize]="10" 
+                        [paginateDetails]="true" 
+                        [selectedRows]="false" 
+                        [dateFilter]="true" 
+                        [downloadReports]="true"
+                        [exportButtons]="['excel', 'pdf']"
+                        [customButtons]="customButtons"
+                        [initialDateFilter]="'this_month'"
+                        (action)="onTableAction($event)"
+                        (customAction)="onCustomAction($event)"
+                        (dateFilterChange)="onDateFilterChange($event)"></app-table>
                     </div>
                 </div>
             </app-card>

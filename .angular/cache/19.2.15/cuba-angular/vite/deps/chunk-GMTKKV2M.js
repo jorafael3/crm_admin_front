@@ -1,6 +1,6 @@
 import {
   isPlatformBrowser
-} from "./chunk-IVLPK6CY.js";
+} from "./chunk-ZV3PAJXX.js";
 import {
   Directive,
   ElementRef,
@@ -743,4 +743,4 @@ export {
   ResizeHandleDirective,
   ResizableModule
 };
-//# sourceMappingURL=chunk-5Q42NR4Z.js.map
+//# sourceMappingURL=chunk-GMTKKV2M.js.map

@@ -18,6 +18,14 @@ export const content: Routes = [
         },
     },
     {
+        path: 'mantenimiento',
+        loadChildren: () => import('../../components/mantenimiento/mantenimiento.routes').then(r => r.mantenimientoRoutes),
+        data: {
+            title: "Mantenimiento",
+            breadcrumb: "Mantenimiento"
+        }
+    },
+    {
         path: 'product',
         loadChildren: () => import('../../components/product/product.routes').then(r => r.product),
         data: {

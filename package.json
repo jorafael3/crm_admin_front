@@ -37,6 +37,9 @@
     "chart.js": "^4.4.7",
     "date-fns": "^4.1.0",
     "feather-icons": "^4.29.2",
+    "file-saver": "^2.0.5",
+    "jspdf": "^3.0.1",
+    "jspdf-autotable": "^5.0.2",
     "leaflet": "^1.9.4",
     "ng-apexcharts": "1.7.4",
     "ng-chartist": "^9.0.0",
@@ -63,6 +66,7 @@
     "sweetalert2": "^11.15.10",
     "swiper": "^11.2.4",
     "tslib": "^2.3.0",
+    "xlsx": "^0.18.5",
     "zone.js": "~0.15.0"
   },
   "devDependencies": {

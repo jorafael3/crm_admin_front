@@ -40,6 +40,14 @@ export interface TableClickedAction {
     value?: any;
 }
 
+export interface CustomButton {
+    label: string;
+    action: string;
+    icon?: string;
+    class?: string;
+    tooltip?: string;
+}
+
 export interface columnColors {
    [key: string]: string;
 }

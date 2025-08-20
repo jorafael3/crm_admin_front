@@ -1,7 +1,7 @@
 import {
   coerceElement,
   coerceNumberProperty
-} from "./chunk-DSEIV745.js";
+} from "./chunk-Q74FW6BQ.js";
 import {
   Directive,
   ElementRef,
@@ -276,4 +276,4 @@ export {
   ContentObserver,
   ObserversModule
 };
-//# sourceMappingURL=chunk-CV5LZQO4.js.map
+//# sourceMappingURL=chunk-M5ETN3T5.js.map

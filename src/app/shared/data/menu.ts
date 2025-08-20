@@ -44,6 +44,26 @@ export const menuItems: Menu[] = [
     ],
   },
   {
+    main_title: "Mantenimiento"
+  },
+  {
+    title: 'Usuarios',
+    id: 'usuarios',
+    icon: 'user',
+    type: 'link',
+    path: '/mantenimiento/usuarios',
+    bookmark: false,
+    level: 1,
+  }, {
+    title: 'Usuarios 2',
+    id: 'usuarios2',
+    icon: 'user',
+    type: 'link',
+    path: '/mantenimiento/usuarios2',
+    bookmark: false,
+    level: 1,
+  },
+  {
     main_title: "Applications"
   },
   {
@@ -140,7 +160,7 @@ export const menuItems: Menu[] = [
         ]
       },
       { path: '/cart', title: 'Cart', type: 'link', id: 'cart' },
-      { path: '/wishlist', title: 'Wishlist', type: 'link',id: 'wishlist' },
+      { path: '/wishlist', title: 'Wishlist', type: 'link', id: 'wishlist' },
       { path: '/checkout', title: 'Checkout', type: 'link', id: 'checkout' },
       { path: '/review', title: 'Manage Review', type: 'link', badge: true, badge_color: 'success', badge_value: "New", id: 'review' },
       { path: '/settings', title: 'Settings', type: 'link', badge: true, badge_color: 'success', badge_value: "New", id: 'setting' },
