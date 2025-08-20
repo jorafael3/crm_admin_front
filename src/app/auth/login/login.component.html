@@ -12,16 +12,16 @@
           <div class="login-main">
             <form class="theme-form" [formGroup]="loginForm" (ngSubmit)="login()">
               <h4>Iniciar sesión en la cuenta</h4>
-              <p>Ingrese su correo electrónico y contraseña para acceder</p>
+              <p>Ingrese su usuario y contraseña para acceder</p>
               <div class="form-group">
-                <label class="col-form-label">Correo electrónico</label>
-                <input class="form-control" type="email" required="" placeholder="test@gmail.com"
-                  formControlName="email">
-                @if(loginForm.controls['email'].touched && loginForm.controls['email'].errors?.['required']){
-                <div class="text text-danger mt-1">El correo electrónico es obligatorio</div>
+                <label class="col-form-label">Usuario</label>
+                <input class="form-control" type="text" required="" placeholder="Usuario"
+                  formControlName="username">
+                @if(loginForm.controls['username'].touched && loginForm.controls['username'].errors?.['required']){
+                <div class="text text-danger mt-1">El usuario es obligatorio</div>
                 }
-                @if(loginForm.controls['email'].touched && loginForm.controls['email'].errors?.['email']){
-                <div class="text text-danger mt-1">Correo electrónico inválido</div>
+                @if(loginForm.controls['username'].touched && loginForm.controls['username'].errors?.['email']){
+                <div class="text text-danger mt-1">Usuario inválido</div>
                 }
               </div>
               <div class="form-group">
@@ -48,7 +48,7 @@
                   <input class="checkbox-primary form-check-input" id="checkbox1" type="checkbox">
                   <label class="text-muted form-check-label" for="checkbox1">Recordar contraseña</label>
                 </div>
-                <a class="link" [routerLink]="['/auth/forgot-password']">¿Olvidaste tu contraseña?</a>
+                <!-- <a class="link" [routerLink]="['/auth/forgot-password']">¿Olvidaste tu contraseña?</a> -->
                 <div class="text-end">
                   <button class="btn btn-primary btn-block w-100 mt-3" type="submit" [disabled]="!loginForm.valid">Iniciar sesión</button>
                 </div>

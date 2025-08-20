@@ -1,9 +1,15 @@
 <div class="d-flex profile-media">
-    <img class="b-r-10" src="assets/images/dashboard/profile.png" alt="profile">
+    <div class="avatar-wrapper">
+      <img class="b-r-10" src="assets/images/dashboard/profile.png" alt="profile">
+      <!-- Fallback: mostrar iniciales si no hay imagen -->
+      <div class="avatar-initials b-r-10" *ngIf="false">
+        {{ getUserInitials() }}
+      </div>
+    </div>
     <div class="flex-grow-1">
-        <span>Emay Walter</span>
+        <span>{{ getCurrentUserName() }}</span>
       <p class="mb-0">
-        Admin
+        {{ getUserRole() }}
          <i class="middle fa-solid fa-angle-down"></i>
         </p>
     </div>
