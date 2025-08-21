@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
   templateUrl: './customer-order-report.component.html',
   styleUrl: './customer-order-report.component.scss'
 })
-export class CustomerOrderReportComponent {
+export class PlanesComponent {
   showCreateModal: boolean = false;
   usuarioNuevo: any = {};
 

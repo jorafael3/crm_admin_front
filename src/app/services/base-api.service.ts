@@ -15,8 +15,9 @@ export class BaseApiService {
 
   constructor(protected http: HttpClient) {
     // Usar ConfigService si está disponible, sino usar environment
-    this.baseUrl = this.configService?.getApiUrl() || environment.apiUrl || 'http://localhost/plantillaMVC';
+    this.baseUrl = environment.apiUrl;
     console.log('BaseApiService initialized with URL:', this.baseUrl);
+
   }
 
   /**
@@ -41,7 +42,7 @@ export class BaseApiService {
   protected handleError(error: HttpErrorResponse) {
     let errorMessage = 'Ha ocurrido un error desconocido';
     
-    console.error('Full API Error:', error);
+    
     
     if (error.error instanceof ErrorEvent) {
       // Client-side error

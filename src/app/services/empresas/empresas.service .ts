@@ -11,7 +11,7 @@ import { environment } from '../../../environments/environment';
 })
 export class UsuariosService extends BaseApiService {
 
-    private readonly endpoint = environment.apiUrl + '/mantenimiento/UsuarioAdmin/';
+    private readonly endpoint = environment.apiUrl + '/empresas/empresa/';
 
     constructor(http: HttpClient) {
         super(http);
@@ -45,8 +45,8 @@ export class UsuariosService extends BaseApiService {
     /**
      * Enviar petición libre a cualquier endpoint
      */
-    getUserList(data: any): Observable<any> {
-        return this.http.post<any>(this.endpoint + "getAllUsers", data, { headers: this.headers });
+    getEmpresaList(data: any): Observable<any> {
+        return this.http.post<any>(this.endpoint + "getAllEmpresas", data, { headers: this.headers });
     }
 
     getUserDetails(data: any): Observable<any> {

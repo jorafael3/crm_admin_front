@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CardComponent } from "../../../shared/components/ui/card/card.component";
 import { TableComponent } from "../../../shared/components/ui/table/table.component";
 import { TableConfigs, TableClickedAction, CustomButton } from '../../../shared/interface/common';
-import { UsuariosService } from '../../../services/mantenimiento/usuarios.service';
+import { UsuariosService } from '../../../services/empresas/empresas.service ';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -15,7 +15,7 @@ import Swal from 'sweetalert2';
 })
 export class CustomerOrderReportComponent {
   showCreateModal: boolean = false;
-  usuarioNuevo: any = {};
+  empresaNuevo: any = {};
 
   showEditModal: boolean = false;
   usuarioEditando: any = null;
@@ -34,6 +34,7 @@ export class CustomerOrderReportComponent {
       class: 'btn btn-success',
       tooltip: 'Actualizar datos de la tabla'
     },
+
     {
       label: '',
       action: 'create_user',
@@ -46,29 +47,39 @@ export class CustomerOrderReportComponent {
 
   public tableConfig: TableConfigs = {
     columns: [
-      { title: 'Usuario', field_value: 'usuario', sort: true },
-      { title: 'Nombre', field_value: 'nombre', sort: true },
-      { title: 'Apellido', field_value: 'apellido', sort: true },
-      { title: 'Email', field_value: 'email', sort: true },
+      { title: 'Nombre Empresa', field_value: 'nombre_comercial', sort: true },
+      { title: 'Fecha Inscripcion', field_value: 'fecha_creacion', sort: true },
+      { title: 'Pais', field_value: 'pais', sort: true },
+      { title: 'Plan', field_value: 'plan_nombre', sort: true },
+      { title: 'Plan Expiracion', field_value: 'fecha_expira', sort: true },
+      { title: 'Días Resatantes', field_value: 'dias_restantes', sort: true },
       // { title: 'Empresa', field_value: 'empresa', sort: true },
       { title: 'Estado', field_value: 'estado', sort: true },
     ],
     row_action: [
       {
         label: '',
-        action_to_perform: 'edit_user',
+        action_to_perform: 'edit_empresa',
         icon: 'edit',
         type: 'button',
         class: 'btn btn-light btn-sm',
-        tooltip: 'Editar usuario'
+        tooltip: 'Editar empresa'
       },
       {
         label: '',
-        action_to_perform: 'delete_user',
+        action_to_perform: 'manage_empresa',
+        icon: 'building',
+        type: 'button',
+        class: 'btn btn-light btn-sm',
+        tooltip: 'Administrar Empresa'
+      },
+      {
+        label: '',
+        action_to_perform: 'delete_empresa',
         icon: 'trash',
         type: 'button',
-        class: 'btn btn-danger btn-sm ms-1',
-        tooltip: 'Eliminar usuario'
+        class: 'btn btn-danger btn-sm',
+        tooltip: 'Eliminar Empresa'
       }
     ],
     data: []
@@ -93,7 +104,7 @@ export class CustomerOrderReportComponent {
     };
     console.log('param: ', param);
 
-    this.usuariosService.getUserList(param).subscribe({
+    this.usuariosService.getEmpresaList(param).subscribe({
       next: (response) => {
         console.log('response: ', response);
         if (response.success && response.data) {
@@ -103,6 +114,8 @@ export class CustomerOrderReportComponent {
           setTimeout(() => {
             this.cdr.detectChanges();
           }, 0);
+        } else {
+          Swal.fire("Error!", response.message, "error");
         }
         this.isLoading = false;
       },
@@ -116,6 +129,22 @@ export class CustomerOrderReportComponent {
 
     this.Usuarios_Datos.map(function (usuario) {
       usuario.estado = `<span class="badge badge-light-${usuario.estado == 'I' ? 'danger' : 'success'}">${(usuario.estado == 'I' ? 'Inactivo' : 'Activo')}</span>`;
+      usuario.fecha_creacion = new Date(usuario.fecha_creacion).toLocaleDateString('es-ES', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+      });
+      usuario.fecha_expira = new Date(usuario.fecha_expira).toLocaleDateString('es-ES', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+      });
+      usuario.dias_restantes = 1;
+      const hoy = new Date();
+      const fechaExpira = new Date(usuario.fecha_expira.split('/').reverse().join('-'));
+      const diffTime = fechaExpira.getTime() - hoy.getTime();
+      const dias_r = Math.max(0, Math.ceil(diffTime / (1000 * 60 * 60 * 24)));
+      usuario.dias_restantes = `<span class="badge badge-light-${dias_r <= 5 ? 'danger' : dias_r <= 15 ? 'warning' : 'primary'}">${dias_r} días</span>`;
     });
 
     this.tableConfig = { ...this.tableConfig, data: this.Usuarios_Datos };
@@ -139,16 +168,11 @@ export class CustomerOrderReportComponent {
 
   onCreateUser() {
 
-    this.usuarioNuevo = {
-      usuario: '',
-      nombre: '',
-      apellido: '',
-      telefono: '',
-      email: '',
-      estado: 'A',
-      empresa: '',
-      password: '',
-      password_confirmation: ''
+    this.empresaNuevo = {
+      razon_social: '',
+      nombre_comercial: '',
+      pais: '',
+      ruc: ''
     };
     this.showCreateModal = true;
   }
@@ -156,25 +180,25 @@ export class CustomerOrderReportComponent {
   guardarNuevoUsuario() {
     this.isLoading = true;
     const datosNuevo = {
-      usuario: this.usuarioNuevo.usuario,
-      nombre: this.usuarioNuevo.nombre,
-      apellido: this.usuarioNuevo.apellido,
-      telefono: this.usuarioNuevo.telefono,
-      email: this.usuarioNuevo.email,
-      estado: this.usuarioNuevo.estado,
-      empresa: this.usuarioNuevo.empresa,
-      password: this.usuarioNuevo.password,
-      password_confirmation: this.usuarioNuevo.password_confirmation
+      razon_social: this.empresaNuevo.razon_social,
+      nombre_comercial: this.empresaNuevo.nombre_comercial,
+      pais: this.empresaNuevo.pais,
+      ruc: this.empresaNuevo.ruc
     };
-
-    if (datosNuevo.usuario.trim() == "") {
-      Swal.fire("Error!", "El campo usuario es obligatorio", "error");
+    if (datosNuevo.razon_social.trim() == "") {
+      Swal.fire("Error!", "El campo razón social es obligatorio", "error");
       this.isLoading = false;
       return;
     }
 
-    if (datosNuevo.email.trim() == "") {
-      Swal.fire("Error!", "El campo email es obligatorio", "error");
+    if (datosNuevo.nombre_comercial.trim() == "") {
+      Swal.fire("Error!", "El campo nombre comercial es obligatorio", "error");
+      this.isLoading = false;
+      return;
+    }
+
+    if (datosNuevo.pais.trim() == "") {
+      Swal.fire("Error!", "El campo país es obligatorio", "error");
       this.isLoading = false;
       return;
     }

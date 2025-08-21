@@ -17,6 +17,9 @@ export const content: Routes = [
             breadcrumb: "Widgets"
         },
     },
+
+
+
     {
         path: 'mantenimiento',
         loadChildren: () => import('../../components/mantenimiento/mantenimiento.routes').then(r => r.mantenimientoRoutes),
@@ -25,6 +28,17 @@ export const content: Routes = [
             breadcrumb: "Mantenimiento"
         }
     },
+
+      {
+        path: 'empresas',
+        loadChildren: () => import('../../components/empresas/empresas.routes').then(r => r.empresasRoutes),
+        data: {
+            title: "Empresas",
+            breadcrumb: "Empresas"
+        }
+    },
+
+
     {
         path: 'product',
         loadChildren: () => import('../../components/product/product.routes').then(r => r.product),

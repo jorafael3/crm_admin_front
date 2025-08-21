@@ -48,6 +48,21 @@ export const menuItems: Menu[] = [
     ],
   },
   {
+    title: 'Empresas',
+    id: 'empresas',
+    icon: 'building',
+    type: 'sub',
+    active: true,
+    level: 1,
+    badge: true,
+    badge_value: "1",
+    badge_color: 'primary',
+    children: [
+      { path: '/empresas/empresas', title: 'Lista Empresas', type: 'link' },
+      { path: '/empresas/planes', title: 'Planes', type: 'link' },
+    ],
+  },
+  {
     title: 'Widgets',
     id: 'widgets',
     icon: 'widget',
