@@ -20,13 +20,17 @@
           <span (click)="handleDropdown()">{{ selectedDate ? selectedDate : 'Seleccionar' }}</span>
           <div id="rangeButtons" [class.range-option]="dateDropdownOpen">
             <button (click)="handleDateFilter('today')" [class.active]="selectedValue == 'today'">Hoy</button>
-            <button (click)="handleDateFilter('yesterday')"
-              [class.active]="selectedValue == 'yesterday'">Ayer</button>
-            <button (click)="handleDateFilter('7_days')" [class.active]="selectedValue == '7_days'">Últimos 7 días</button>
-            <button (click)="handleDateFilter('30_days')" [class.active]="selectedValue == '30_days'">Últimos 30 días</button>
-            <button (click)="handleDateFilter('this_month')" [class.active]="selectedValue == 'this_month'">Este mes</button>
-            <button (click)="handleDateFilter('last_month')" [class.active]="selectedValue == 'last_month'">Último mes</button>
-            <button (click)="handleDateFilter('custom')" [class.active]="selectedValue == 'custom'">Rango personalizado</button>
+            <button (click)="handleDateFilter('yesterday')" [class.active]="selectedValue == 'yesterday'">Ayer</button>
+            <button (click)="handleDateFilter('7_days')" [class.active]="selectedValue == '7_days'">Últimos 7
+              días</button>
+            <button (click)="handleDateFilter('30_days')" [class.active]="selectedValue == '30_days'">Últimos 30
+              días</button>
+            <button (click)="handleDateFilter('this_month')" [class.active]="selectedValue == 'this_month'">Este
+              mes</button>
+            <button (click)="handleDateFilter('last_month')" [class.active]="selectedValue == 'last_month'">Último
+              mes</button>
+            <button (click)="handleDateFilter('custom')" [class.active]="selectedValue == 'custom'">Rango
+              personalizado</button>
           </div>
 
         </div>
@@ -64,39 +68,41 @@
   <div class="dt-buttons btn-group flex-wrap">
     <!-- Botones personalizados -->
     @for(customBtn of customButtons; track customBtn.action) {
-    <button 
-        [class]="customBtn.class || 'btn btn-outline-secondary'" 
-        type="button" 
-        [title]="customBtn.tooltip || customBtn.label"
-        (click)="handleCustomAction(customBtn.action)">
-        @if(customBtn.icon) {
-        <i [class]="customBtn.icon"></i>
-        }
-        <span>{{ customBtn.label }}</span>
+    <button [class]="customBtn.class || 'btn btn-outline-secondary'" type="button"
+      [title]="customBtn.tooltip || customBtn.label" (click)="handleCustomAction(customBtn.action)">
+      @if(customBtn.icon) {
+      <i [class]="customBtn.icon"></i>
+      }
+      <span>{{ customBtn.label }}</span>
     </button>
     }
-    
+
     <!-- Separador si hay botones personalizados y de exportación -->
     @if(customButtons.length > 0 && downloadReports) {
     <div class="btn-separator mx-2"></div>
     }
-    
+
     <!-- Botones de exportación existentes -->
     @if(downloadReports) {
     @if(shouldShowButton('copy')) {
-    <button class="btn buttons-copy buttons-html5 btn-outline-primary" type="button" (click)="exportData('copy')"><span>Copy</span></button>
+    <button class="btn buttons-copy buttons-html5 btn-outline-primary" type="button"
+      (click)="exportData('copy')"><span>Copy</span></button>
     }
     @if(shouldShowButton('csv')) {
-    <button class="btn buttons-csv buttons-html5 btn-outline-primary" type="button" (click)="exportData('csv')"><span>CSV</span></button>
+    <button class="btn buttons-csv buttons-html5 btn-outline-primary" type="button"
+      (click)="exportData('csv')"><span>CSV</span></button>
     }
     @if(shouldShowButton('excel')) {
-    <button class="btn buttons-excel buttons-html5 btn-outline-primary" type="button" (click)="exportData('excel')"><span>Excel</span></button>
+    <button class="btn buttons-excel buttons-html5 btn-outline-primary" type="button"
+      (click)="exportData('excel')"><span>Excel</span></button>
     }
     @if(shouldShowButton('pdf')) {
-    <button class="btn buttons-pdf buttons-html5 btn-outline-primary" type="button" (click)="exportData('pdf')"><span>PDF</span></button>
+    <button class="btn buttons-pdf buttons-html5 btn-outline-primary" type="button"
+      (click)="exportData('pdf')"><span>PDF</span></button>
     }
     @if(shouldShowButton('print')) {
-    <button class="btn buttons-print btn-outline-primary" type="button" (click)="exportData('print')"><span>Print</span></button>
+    <button class="btn buttons-print btn-outline-primary" type="button"
+      (click)="exportData('print')"><span>Print</span></button>
     }
     }
   </div>
@@ -189,36 +195,49 @@
       <td>
         <div class="product-action common-align gap-2 justify-content-start">
           @for(rows of tableConfig.row_action; track rows) {
-          @if(rows.type == 'button'){
-          <button [class]="rows.class" (click)="handleAction(rows, details)">{{ rows.label }}</button>
-          }
-          @if(rows.label == 'Create') {
-          <button class="plus-btn">+ </button>
-          }
-          @else if(rows.label == 'Edit' || rows.label == 'Delete') {
-          <a class="square-white" href="javascript:void(0)" [routerLink]="rows.path"
-            (click)="handleAction(rows, details)">
-            <app-svg-icon [icon]="rows.icon"></app-svg-icon>
-          </a>
-          } @else if(rows.label == 'View') {
-          <a class="square-white" href="javascript:void(0)" (click)="handleAction(rows, details)"
-            [routerLink]="rows.path">
-            <i class="fa-solid fa-eye"></i>
-          </a>
-          } @else if(rows.label == 'Refresh') {
-          <a class="square-white" href="javascript:void(0)" placement="top" [ngbTooltip]="'Change Status'">
-            <i class="fa-solid fa-{{ rows.icon }}"></i>
-          </a>
-          } @else if(rows.label == 'Message') {
-          <Button class="btn btn-primary" placement="top" [ngbTooltip]="'Message'"><i
-              class="fa-solid fa-envelope"></i></Button>
-          } @else if(rows.label == 'Approve') {
-          <Button class="btn btn-success" placement="top" [ngbTooltip]="'Approve'"><i
-              class="fa-solid fa-thumbs-up"></i></Button>
-          } @else if(rows.label == 'Reject') {
-          <Button class="btn btn-danger" placement="top" [ngbTooltip]="'Reject'"><i
-              class="fa-solid fa-circle-xmark"></i></Button>
-          }
+
+
+          <button title="{{ rows.tooltip }}" [class]="rows.class" (click)="handleAction(rows, details)">
+            <span>
+              @if(rows.icon) {
+              <i class="fa-solid fa-{{ rows.icon }}"></i> &nbsp;
+              }
+              @if(rows.label) {
+                <span>{{ rows.label }}</span>
+              }
+            </span>
+          </button>
+
+          <!-- @if(rows.type == 'button'){
+            <button [class]="rows.class" (click)="handleAction(rows, details)">{{ rows.label }}</button>
+            }
+            @if(rows.label == 'Create') {
+            <button class="plus-btn">+ </button>
+            } -->
+          <!-- @else if(rows.label == 'Edit' || rows.label == 'Delete') {
+            <a class="square-white" href="javascript:void(0)" [routerLink]="rows.path"
+              (click)="handleAction(rows, details)">
+              <app-svg-icon [icon]="rows.icon"></app-svg-icon>
+            </a>
+            } @else if(rows.label == 'View') {
+            <a class="square-white" href="javascript:void(0)" (click)="handleAction(rows, details)"
+              [routerLink]="rows.path">
+              <i class="fa-solid fa-eye"></i>
+            </a>
+            } @else if(rows.label == 'Refresh') {
+            <a class="square-white" href="javascript:void(0)" placement="top" [ngbTooltip]="'Change Status'">
+              <i class="fa-solid fa-{{ rows.icon }}"></i>
+            </a>
+            } @else if(rows.label == 'Message') {
+            <Button class="btn btn-primary" placement="top" [ngbTooltip]="'Message'"><i
+                class="fa-solid fa-envelope"></i></Button>
+            } @else if(rows.label == 'Approve') {
+            <Button class="btn btn-success" placement="top" [ngbTooltip]="'Approve'"><i
+                class="fa-solid fa-thumbs-up"></i></Button>
+            } @else if(rows.label == 'Reject') {
+            <Button class="btn btn-danger" placement="top" [ngbTooltip]="'Reject'"><i
+                class="fa-solid fa-circle-xmark"></i></Button>
+            } -->
           }
         </div>
       </td>

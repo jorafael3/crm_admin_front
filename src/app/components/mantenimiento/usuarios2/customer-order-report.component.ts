@@ -5,6 +5,7 @@ import { CardComponent } from "../../../shared/components/ui/card/card.component
 import { TableComponent } from "../../../shared/components/ui/table/table.component";
 import { TableConfigs, TableClickedAction, CustomButton } from '../../../shared/interface/common';
 import { UsuariosService } from '../../../services/mantenimiento/usuarios.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-customer-order-report',
@@ -30,25 +31,12 @@ export class CustomerOrderReportComponent {
     },
     {
       label: '',
-      action: 'send_email',
-      icon: 'fa fa-envelope',
+      action: 'create_user',
+      icon: 'fa fa-plus',
       class: 'btn btn-info',
-      tooltip: 'Enviar reporte por email'
+      tooltip: 'Crear nuevo usuario'
     },
-    {
-      label: '',
-      action: 'generate_report',
-      icon: 'fa fa-chart-bar',
-      class: 'btn btn-warning',
-      tooltip: 'Generar reporte personalizado'
-    },
-    {
-      label: '',
-      action: 'clear_filters',
-      icon: 'fa fa-times',
-      class: 'btn btn-secondary',
-      tooltip: 'Limpiar filtros de fecha'
-    }
+
   ];
 
   public tableConfig: TableConfigs = {
@@ -60,18 +48,28 @@ export class CustomerOrderReportComponent {
     ],
     row_action: [
       {
-        label: 'Ver Pedidos',
-        action_to_perform: 'view_orders',
-        icon: 'eye',
+        label: '',
+        action_to_perform: 'edit_user',
+        icon: 'edit',
         type: 'button',
-        class: 'btn btn-info btn-sm me-2'
+        class: 'btn btn-light btn-sm',
+        tooltip: 'Editar usuario'
       },
       {
-        label: 'Contactar',
+        label: '',
         action_to_perform: 'contact_customer',
-        icon: 'message',
+        icon: 'envelope',
         type: 'button',
-        class: 'btn btn-success btn-sm'
+        class: 'btn btn-success btn-sm',
+        tooltip: 'Contactar usuario por email'
+      },
+      {
+        label: '',
+        action_to_perform: 'delete_user',
+        icon: 'trash',
+        type: 'button',
+        class: 'btn btn-danger btn-sm ms-1',
+        tooltip: 'Eliminar usuario'
       }
     ],
     data: []
@@ -100,9 +98,8 @@ export class CustomerOrderReportComponent {
       next: (response) => {
         if (response.success && response.data) {
           // Forzar cambio de referencia para disparar ngOnChanges en TableComponent
-          this.tableConfig = { ...this.tableConfig, data: response.data };
           this.Usuarios_Datos = response.data;
-          console.log('Datos para la tabla:', this.tableConfig.data);
+          this.OnFillTableAction();
           setTimeout(() => {
             this.cdr.detectChanges();
           }, 0);
@@ -115,30 +112,70 @@ export class CustomerOrderReportComponent {
     });
   }
 
+  OnFillTableAction() {
+
+    this.Usuarios_Datos.map(function (usuario) {
+      usuario.estado = `<span class="badge badge-light-${usuario.estado == 'I' ? 'danger' : 'success'}">${(usuario.estado == 'I' ? 'Inactivo' : 'Activo')}</span>`;
+    });
+
+    this.tableConfig = { ...this.tableConfig, data: this.Usuarios_Datos };
+
+  }
   onTableAction(action: TableClickedAction) {
     switch (action.action_to_perform) {
-      case 'view_orders':
-        this.viewCustomerOrders(action.data);
+      case 'edit_user':
+        this.editUser(action.data);
         break;
       case 'contact_customer':
         this.contactCustomer(action.data);
         break;
+      case 'delete_user':
+        this.deleteUser(action.data);
+        break;
       default:
     }
+  }
+
+  private editUser(user: any) {
+    console.log("🚀 ~ CustomerOrderReportComponent ~ editUser ~ user:", user);
+    // Aquí puedes abrir un modal de edición o navegar a una página de edición
+    alert(`Editar usuario: ${user.usuario}\nEmail: ${user.email}`);
   }
 
   private viewCustomerOrders(customer: any) {
     alert(`Ver pedidos de: ${customer.customer_name}`);
   }
 
-  private contactCustomer(customer: any) {
-    alert(`Contactar a: ${customer.customer_name}\nEmail: ${customer.customer_email}`);
+  private contactCustomer(user: any) {
+    console.log("🚀 ~ CustomerOrderReportComponent ~ contactCustomer ~ user:", user);
+    // Aquí puedes abrir un modal de composición de email o usar mailto:
+    if (user.email) {
+      window.open(`mailto:${user.email}?subject=Contacto desde CRM&body=Hola ${user.usuario},`);
+    } else {
+      alert(`No hay email disponible para ${user.usuario}`);
+    }
+  }
+
+  private deleteUser(user: any) {
+    console.log("🚀 ~ CustomerOrderReportComponent ~ deleteUser ~ user:", user);
+
+    // Confirmación antes de eliminar
+    if (confirm(`¿Estás seguro de que quieres eliminar al usuario "${user.usuario}"?\n\nEsta acción no se puede deshacer.`)) {
+      // Aquí llamarías al servicio para eliminar
+      // this.usuariosService.deleteUser(user.id_usuario).subscribe({...});
+      alert(`Usuario "${user.usuario}" eliminado correctamente`);
+      // Recargar la tabla después de eliminar
+      this.loadTableData();
+    }
   }
 
   onCustomAction(event: { action: string, data?: any }) {
     switch (event.action) {
       case 'refresh':
-        this.loadTableData();
+        this.onRefreshTableData();
+        break;
+      case 'create_user':
+        this.onCreateUser();
         break;
       default:
     }
@@ -149,5 +186,8 @@ export class CustomerOrderReportComponent {
     this.loadTableData();
   }
 
+  onCreateUser() {
+    Swal.fire("Error!", "Sorry, looks like some data are not filled, please try again !", "error")
 
+  }
 }

@@ -18,17 +18,33 @@ export const menuItems: Menu[] = [
     children: [
       { path: '/dashboard/default', title: 'default', type: 'link' },
       { path: '/dashboard/e-commerce', title: 'Ecommerce', type: 'link' },
-      { path: '/dashboard/online-course', title: 'Online course', type: 'link' },
-      { path: '/dashboard/crypto', title: 'Crypto', type: 'link' },
-      { path: '/dashboard/social', title: 'Social', type: 'link' },
-      { path: '/dashboard/nft', title: 'NFT', type: 'link' },
-      { path: '/dashboard/school-management', title: 'School management', type: 'link' },
-      { path: '/dashboard/pos', title: 'POS', type: 'link' },
-      { path: '/dashboard/crm', title: 'CRM', type: 'link', badge: true, badge_color: 'success', badge_value: "New" },
-      { path: '/dashboard/analytics', title: 'Analytics', type: 'link', badge: true, badge_color: 'success', badge_value: "New" },
-      { path: '/dashboard/hr', title: 'HR', type: 'link', badge: true, badge_color: 'success', badge_value: "New" },
-      { path: '/dashboard/projects', title: 'Projects', type: 'link', badge: true, badge_color: 'success', badge_value: "New" },
-      { path: '/dashboard/logistics', title: 'Logistics', type: 'link', badge: true, badge_color: 'success', badge_value: "New" },
+      // { path: '/dashboard/online-course', title: 'Online course', type: 'link' },
+      // { path: '/dashboard/crypto', title: 'Crypto', type: 'link' },
+      // { path: '/dashboard/social', title: 'Social', type: 'link' },
+      // { path: '/dashboard/nft', title: 'NFT', type: 'link' },
+      // { path: '/dashboard/school-management', title: 'School management', type: 'link' },
+      // { path: '/dashboard/pos', title: 'POS', type: 'link' },
+      // { path: '/dashboard/crm', title: 'CRM', type: 'link', badge: true, badge_color: 'success', badge_value: "New" },
+      // { path: '/dashboard/analytics', title: 'Analytics', type: 'link', badge: true, badge_color: 'success', badge_value: "New" },
+      // { path: '/dashboard/hr', title: 'HR', type: 'link', badge: true, badge_color: 'success', badge_value: "New" },
+      // { path: '/dashboard/projects', title: 'Projects', type: 'link', badge: true, badge_color: 'success', badge_value: "New" },
+      // { path: '/dashboard/logistics', title: 'Logistics', type: 'link', badge: true, badge_color: 'success', badge_value: "New" },
+    ],
+  },
+  {
+    main_title: "Mantenimiento"
+  }, {
+    title: 'Usuarios',
+    id: 'usuarios',
+    icon: 'user',
+    type: 'sub',
+    active: true,
+    level: 1,
+    badge: true,
+    badge_value: "1",
+    badge_color: 'primary',
+    children: [
+      { path: '/mantenimiento/usuarios', title: 'Lista Usuarios', type: 'link' },
     ],
   },
   {
@@ -43,26 +59,7 @@ export const menuItems: Menu[] = [
       { path: '/widgets/charts', title: 'Chart', type: 'link', id: 'chart-widgets' },
     ],
   },
-  {
-    main_title: "Mantenimiento"
-  },
-  {
-    title: 'Usuarios',
-    id: 'usuarios',
-    icon: 'user',
-    type: 'link',
-    path: '/mantenimiento/usuarios',
-    bookmark: false,
-    level: 1,
-  }, {
-    title: 'Usuarios 2',
-    id: 'usuarios2',
-    icon: 'user',
-    type: 'link',
-    path: '/mantenimiento/usuarios2',
-    bookmark: false,
-    level: 1,
-  },
+
   {
     main_title: "Applications"
   },

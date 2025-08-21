@@ -1,17 +1,23 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import { ConfigService } from './config/config.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BaseApiService {
   
-  protected baseUrl: string = environment.apiUrl || 'http://localhost:3000/api';
+  protected baseUrl: string;
+  private configService = inject(ConfigService);
 
-  constructor(protected http: HttpClient) {}
+  constructor(protected http: HttpClient) {
+    // Usar ConfigService si está disponible, sino usar environment
+    this.baseUrl = this.configService?.getApiUrl() || environment.apiUrl || 'http://localhost/plantillaMVC';
+    console.log('BaseApiService initialized with URL:', this.baseUrl);
+  }
 
   /**
    * Get headers with authorization token

@@ -32,6 +32,7 @@ export interface TableRows {
   model_text?: string;
   type?: string;
   class?: string;
+  tooltip?: string;
 }
 
 export interface TableClickedAction {

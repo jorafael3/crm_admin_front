@@ -65,7 +65,7 @@ export class AuthService extends BaseApiService {
       );
     } else {
       // Modo producción - usar API real
-      return this.post<LoginResponse>('/login/authenticate', credentials).pipe(
+      return this.post<LoginResponse>('/login/login/authenticate', credentials).pipe(
         tap(response => {
           console.log('API response:', response);
           if (response.success && response.user_data) {
