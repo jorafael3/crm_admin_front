@@ -19,7 +19,7 @@
                     <div class="recent-table">
 
                         <app-table [hasCheckbox]="false" [tableConfig]="tableConfig" [pageSize]="10"
-                            [paginateDetails]="true" [selectedRows]="false" [downloadReports]="true"
+                            [paginateDetails]="true" [selectedRows]="true" [downloadReports]="true"
                             [exportButtons]="Buttons_Export" [customButtons]="customButtons"
                             [initialDateFilter]="'this_month'" (action)="onTableAction($event)"
                             (customAction)="onCustomAction($event)">

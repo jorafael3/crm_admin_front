@@ -24,7 +24,7 @@ export class CustomerOrderReportComponent {
 
   fechaPersonalizadaInicio: string = '';
   fechaPersonalizadaFin: string = '';
-  Buttons_Export = ['excel', 'pdf'];
+  Buttons_Export = ['excel', 'pdf',"copy"];
 
   public customButtons: CustomButton[] = [
     {
@@ -52,7 +52,7 @@ export class CustomerOrderReportComponent {
       { title: 'Pais', field_value: 'pais', sort: true },
       { title: 'Plan', field_value: 'plan_nombre', sort: true },
       { title: 'Plan Expiracion', field_value: 'fecha_expira', sort: true },
-      { title: 'Días Resatantes', field_value: 'dias_restantes', sort: true },
+      { title: 'Días Restantes', field_value: 'dias_restantes', sort: true, },
       // { title: 'Empresa', field_value: 'empresa', sort: true },
       { title: 'Estado', field_value: 'estado', sort: true },
     ],
