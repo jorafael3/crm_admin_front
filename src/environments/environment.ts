@@ -9,7 +9,7 @@ function getApiUrl(): string {
 
   // Configuraciones específicas por hostname
   const configurations: { [key: string]: string } = {
-    'localhost': 'http://localhost/plantillaMVC',
+    // 'localhost': 'http://localhost/plantillaMVC',
     '127.0.0.1': 'http://127.0.0.1/plantillaMVC',
     '10.5.3.172:8080': 'http://10.5.3.172:8080/plantillaMVC',
     // Agregar más configuraciones según necesites
@@ -23,7 +23,7 @@ function getApiUrl(): string {
   }
 
   // Por defecto, usar el hostname actual
-  return `http://${hostname}:8080/plantillaMVC`;
+  return `http://${hostname}/plantillaMVC`;
 }
 
 export const environment = {

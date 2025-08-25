@@ -1,17 +1,17 @@
 import {
+  DomSanitizer
+} from "./chunk-3L4KDF3L.js";
+import {
+  Platform,
+  coerceElement,
+  getRtlScrollAxisType
+} from "./chunk-DSEIV745.js";
+import {
   animate,
   style,
   transition,
   trigger
 } from "./chunk-6YOG4KK7.js";
-import {
-  Platform,
-  coerceElement,
-  getRtlScrollAxisType
-} from "./chunk-Q74FW6BQ.js";
-import {
-  DomSanitizer
-} from "./chunk-5UGCSGEM.js";
 import {
   AsyncPipe,
   CommonModule,
@@ -21,10 +21,10 @@ import {
   NgSwitchCase,
   NgSwitchDefault,
   NgTemplateOutlet
-} from "./chunk-SEJUQZKU.js";
+} from "./chunk-RV5ILGUE.js";
 import {
   DOCUMENT
-} from "./chunk-ZV3PAJXX.js";
+} from "./chunk-IVLPK6CY.js";
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -4104,4 +4104,4 @@ export {
   GalleryComponent,
   GalleryModule
 };
-//# sourceMappingURL=chunk-WVYDQZOP.js.map
+//# sourceMappingURL=chunk-O4MQJGBL.js.map

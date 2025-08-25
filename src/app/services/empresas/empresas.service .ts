@@ -1,3 +1,9 @@
+/**
+ * Obtener historial de pagos/suscripción de la empresa
+ */
+
+// ...existing imports...
+// ...mantener solo UNA clase UsuariosService...
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -63,9 +69,41 @@ export class UsuariosService extends BaseApiService {
         return this.http.post<any>(this.endpoint + "deleteUser", data, { headers: this.headers });
     }
 
-    createUser(data: any): Observable<any> {
+    createEmpresa(data: any): Observable<any> {
         data.sessionData = this.getUserSessionData();
         return this.http.post<any>(this.endpoint + "create", data, { headers: this.headers });
+    }
+
+    getEmpresaDataByUid(data: any): Observable<any> {
+        data.sessionData = this.getUserSessionData();
+        return this.http.post<any>(this.endpoint + "getEmpresaDataByUid", data, { headers: this.headers });
+    }
+
+    getContactosEmpresa(data: any): Observable<any> {
+        data.sessionData = this.getUserSessionData();
+        return this.http.post<any>(this.endpoint + "getContactosEmpresa", data, { headers: this.headers });
+    }
+    /**
+     * Obtener historial de pagos/suscripción de la empresa
+     */
+    getHistorialPagosEmpresa(data: any): Observable<any> {
+        data.sessionData = this.getUserSessionData();
+        return this.http.post<any>(this.endpoint + "getHistorialPagosEmpresa", data, { headers: this.headers });
+    }
+
+    createContactoEmpresa(data: any): Observable<any> {
+        data.sessionData = this.getUserSessionData();
+        return this.http.post<any>(this.endpoint + "createContacto", data, { headers: this.headers });
+    }
+
+    agregarPlanEmpresa(data: any): Observable<any> {
+        data.sessionData = this.getUserSessionData();
+        return this.http.post<any>(this.endpoint + "agregarPlanEmpresa", data, { headers: this.headers });
+    }
+
+    getPlanesEmpresa(data: any): Observable<any> {
+        data.sessionData = this.getUserSessionData();
+        return this.http.post<any>(this.endpoint + "getPlanesEmpresa", data, { headers: this.headers });
     }
 
 

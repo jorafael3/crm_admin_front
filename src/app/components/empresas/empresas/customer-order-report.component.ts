@@ -6,6 +6,9 @@ import { TableComponent } from "../../../shared/components/ui/table/table.compon
 import { TableConfigs, TableClickedAction, CustomButton } from '../../../shared/interface/common';
 import { UsuariosService } from '../../../services/empresas/empresas.service ';
 import Swal from 'sweetalert2';
+import { Router, RouterModule } from '@angular/router';
+
+import { navigation } from '../../../shared/data/faq';
 
 @Component({
   selector: 'app-customer-order-report',
@@ -24,7 +27,7 @@ export class CustomerOrderReportComponent {
 
   fechaPersonalizadaInicio: string = '';
   fechaPersonalizadaFin: string = '';
-  Buttons_Export = ['excel', 'pdf',"copy"];
+  Buttons_Export = ['excel', 'pdf', "copy"];
 
   public customButtons: CustomButton[] = [
     {
@@ -85,7 +88,7 @@ export class CustomerOrderReportComponent {
     data: []
   };
 
-  constructor(private usuariosService: UsuariosService, private cdr: ChangeDetectorRef) { }
+  constructor(private usuariosService: UsuariosService, private cdr: ChangeDetectorRef, private router: Router) { }
 
   ngOnInit() {
     // Inicializar fechas personalizada con el inicio de mes y la fecha actual
@@ -156,8 +159,10 @@ export class CustomerOrderReportComponent {
       case 'edit_user':
         this.editUser(action.data);
         break;
-      case 'contact_customer':
-        this.contactCustomer(action.data);
+      case 'manage_empresa':
+        if (action.data && action.data.id_empresa) {
+          this.ManageEmpresa(action.data);
+        }
         break;
       case 'delete_user':
         this.deleteUser(action.data);
@@ -172,18 +177,20 @@ export class CustomerOrderReportComponent {
       razon_social: '',
       nombre_comercial: '',
       pais: '',
-      ruc: ''
+      ruc: '',
+      direccion: ''
     };
     this.showCreateModal = true;
   }
 
-  guardarNuevoUsuario() {
+  guardarNuevo() {
     this.isLoading = true;
     const datosNuevo = {
       razon_social: this.empresaNuevo.razon_social,
       nombre_comercial: this.empresaNuevo.nombre_comercial,
       pais: this.empresaNuevo.pais,
-      ruc: this.empresaNuevo.ruc
+      ruc: this.empresaNuevo.ruc,
+      direccion: this.empresaNuevo.direccion
     };
     if (datosNuevo.razon_social.trim() == "") {
       Swal.fire("Error!", "El campo razón social es obligatorio", "error");
@@ -202,7 +209,7 @@ export class CustomerOrderReportComponent {
       this.isLoading = false;
       return;
     }
-    this.usuariosService.createUser(datosNuevo).subscribe({
+    this.usuariosService.createEmpresa(datosNuevo).subscribe({
       next: (response) => {
         console.log('response: ', response);
         if (response.success) {
@@ -215,6 +222,7 @@ export class CustomerOrderReportComponent {
         this.isLoading = false;
       },
       error: (error) => {
+        console.log("🚀 ~ CustomerOrderReportComponent ~ guardarNuevo ~ error:", error)
         Swal.fire("Error!", "No se pudo crear el usuario", "error");
         this.isLoading = false;
       }
@@ -274,14 +282,9 @@ export class CustomerOrderReportComponent {
     });
   }
 
-  private contactCustomer(user: any) {
-    console.log("🚀 ~ CustomerOrderReportComponent ~ contactCustomer ~ user:", user);
-    // Aquí puedes abrir un modal de composición de email o usar mailto:
-    if (user.email) {
-      window.open(`mailto:${user.email}?subject=Contacto desde CRM&body=Hola ${user.usuario},`);
-    } else {
-      alert(`No hay email disponible para ${user.usuario}`);
-    }
+  private ManageEmpresa(user: any) {
+    console.log("🚀 ~ CustomerOrderReportComponent ~ ManageEmpresa ~ user:", user);
+    this.router.navigate(['/empresas/panel_empresa', user.tenant_uid]);
   }
 
   private deleteUser(user: any) {

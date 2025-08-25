@@ -2,23 +2,12 @@
     <div class="row">
         <div class="col-12">
             <app-card [headerTitle]="'Usuarios'">
-                <div class="row mb-2">
-                    <!-- <div class="col-md-3 mb-2">
-                        <label for="fechaInicio" class="form-label mb-0">Fecha inicial:</label>
-                        <input id="fechaInicio" type="date" class="form-control form-control-sm"
-                            [(ngModel)]="fechaPersonalizadaInicio" name="fechaPersonalizadaInicio">
-                    </div>
-                    <div class="col-md-3 mb-2">
-                        <label for="fechaFin" class="form-label mb-0">Fecha final:</label>
-                        <input id="fechaFin" type="date" class="form-control form-control-sm"
-                            [(ngModel)]="fechaPersonalizadaFin" name="fechaPersonalizadaFin">
-                    </div> -->
-                </div>
+
                 <div class="customer-order-report table-responsive custom-scrollbar">
 
                     <div class="recent-table">
 
-                        <app-table [hasCheckbox]="false" [tableConfig]="tableConfig" [pageSize]="10"
+                        <app-table [hasCheckbox]="false" [tableConfig]="tablePlanesConfig" [pageSize]="10"
                             [paginateDetails]="true" [selectedRows]="false" [downloadReports]="true"
                             [exportButtons]="Buttons_Export" [customButtons]="customButtons"
                             [initialDateFilter]="'this_month'" (action)="onTableAction($event)"
@@ -26,6 +15,8 @@
                         </app-table>
                     </div>
                 </div>
+
+
             </app-card>
         </div>
     </div>
@@ -81,7 +72,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" (click)="showEditModal = false">Cerrar</button>
-                    <button type="button" class="btn btn-primary" (click)="guardarEdicionUsuario()">Guardar</button>
+                    <!-- <button type="button" class="btn btn-primary" (click)="guardarEdicionUsuario()">Guardar</button> -->
                 </div>
             </div>
         </div>
@@ -146,9 +137,46 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" (click)="showCreateModal = false">Cerrar</button>
-                    <button type="button" class="btn btn-primary" (click)="guardarNuevoUsuario()">Guardar</button>
+                    <!-- <button type="button" class="btn btn-primary" (click)="guardarNuevoUsuario()">Guardar</button> -->
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <app-card [headerTitle]="'Become a member'" [border]="true" [padding]="false">
+                <div class="row g-3 pricing-block">
+                    @for(details of datos_planes;track details){
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="pricingtable">
+                            <div class="pricingtable-header">
+                                <h3 class="title">{{ details.plan_nombre }}</h3>
+                            </div>
+                            <div class="price-value">
+                                <span class="currency">$</span>
+                                <span class="amount fs-3">{{ details.precio }}</span><br>
+                                <span class="duration">mes</span>
+                            </div>
+                            <ul class="pricing-content">
+                                <!-- @for(item of details.details;track item){ -->
+                                <li>Usuario: {{ details.max_usuarios }}</li>
+                                <li>Almacenamiento: {{ details.max_almacenamiento }}</li>
+                                <li>Soporte: {{ details.soporte }}</li>
+                                <li>Integraciones: {{ details.integraciones }}</li>
+                                <li>Informes: {{ details.informes }}</li>
+                                <!-- } -->
+                            </ul>
+                            <div class="pricingtable-signup">
+                                <a class="btn btn-primary btn-lg" href="javascript:void(0)">Sign Up</a>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </app-card>
         </div>
     </div>
 </div>

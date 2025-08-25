@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { CustomerOrderReportComponent } from "./empresas/customer-order-report.component";
 import { PlanesComponent } from "./planes/customer-order-report.component";
+import { PanelEmpresaComponent } from "./panel_empresa/PanelEmpresa.component";
 
 export const empresasRoutes: Routes = [
     {
@@ -19,4 +20,12 @@ export const empresasRoutes: Routes = [
             breadcrumb: 'Planes'
         }
     },
+    {
+        path: 'panel_empresa/:uid',
+        component: PanelEmpresaComponent,
+        data: {
+            title: 'Datos de la Empresa',
+            breadcrumb: 'Datos de la Empresa'
+        }
+    }
 ];
